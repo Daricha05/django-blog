@@ -1,0 +1,22 @@
+1 - Créez nouvel user : 
+    CREATE USER django_user WITH PASSWORD 'azertyuiop';
+
+2 - Attribuez de permissions
+    ALTER USER django_user CREATEDB;
+    
+3 - Créez base de données
+    CREATE DATABASE django_db OWNER django_user;
+
+4 - Attribuez le rôle de permissions
+    ALTER DATABASE django_db OWNER TO django_user;
+
+5 - Accorder des droits d'accès 
+    * connexion à la base
+        GRANT CONNECT ON DATABASE django_db TO django_user;
+    * utilisation du schéma principal (public)
+        GRANT USAGE ON SCHEMA public TO django_user;
+    * droits sur toutes les tables existantes
+        GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO django_user;
+    * appliquer automatiquement les permissions pour les futures tables
+        ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON TABLES TO django_user;
+        ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON SEQUENCES TO django_user;
